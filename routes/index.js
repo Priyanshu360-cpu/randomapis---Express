@@ -20,8 +20,7 @@ router.get('/', function(req, res, next) {
   res.json(movies);
 });
 router.get('/time', function(req, res, next) {
-  let arr=[...pass["Passwords"]]
-  if(arr.indexOf(req.url.split("=")[1])!=-1){
+  if([...pass["Passwords"]].indexOf(req.url.split("=")[1])!=-1){
   res.json(time);
 
   }else{
@@ -30,8 +29,7 @@ router.get('/time', function(req, res, next) {
   
 });
 router.get('/evaluate', function(req, res, next) {
-  let arr=[...pass["Passwords"]]
-  if(arr.indexOf(req.url.split("=")[1].split("?")[0])!=-1){
+  if([...pass["Passwords"]].indexOf(req.url.split("=")[1].split("?")[0])!=-1){
     let a =req.url.split("=")[2];
     let result={
       result:evaluate(a)
@@ -45,11 +43,9 @@ router.get('/evaluate', function(req, res, next) {
 router.get('/password',function(req,res,next){
   const path = require('path');
  let a=req.url.split("=")[1];
- let b=[...pass["Passwords"]];
- if(b.indexOf(a)==-1){
- b.push(a);
+ if([...pass["Passwords"]].indexOf(a)==-1){
  let c={
-   Passwords:b
+   Passwords:[...pass["Passwords"],a]
  }
  fs.writeFileSync(path.join(__dirname,'./passwords.json'),JSON.stringify(c));
  res.json(c);
