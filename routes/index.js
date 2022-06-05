@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-
 const fs = require('fs');
 const { evaluate } = require('mathjs')
 var pass = require('./passwords.json');
@@ -53,5 +52,6 @@ router.get('/password',function(req,res,next){
  }
  fs.writeFileSync(path.join(__dirname,'./passwords.json'),JSON.stringify(c));
  res.json(c);
+ pass=require('./passwords.json');
 })
 module.exports = router;
