@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+
+const fs = require('fs');
 const { evaluate } = require('mathjs')
 var pass = require('./passwords.json');
 var today = new Date();
@@ -40,5 +42,16 @@ router.get('/evaluate', function(req, res, next) {
   }else{
     res.send("Wrong key")
   }
+})//http://localhost:3000/evaluate?key=123456?data=2+9+829292
+router.get('/password',function(req,res,next){
+  const path = require('path');
+ let a=req.url.split("=")[1];
+ let b=[...pass["Passwords"]];
+ b.push(a);
+ let c={
+   Passwords:b
+ }
+ fs.writeFileSync(path.join(__dirname,'./passwords.json'),JSON.stringify(c));
+ res.json(c);
 })
 module.exports = router;
