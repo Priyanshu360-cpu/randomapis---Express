@@ -46,6 +46,7 @@ router.get('/password',function(req,res,next){
   const path = require('path');
  let a=req.url.split("=")[1];
  let b=[...pass["Passwords"]];
+ if(b.indexOf(a)==-1){
  b.push(a);
  let c={
    Passwords:b
@@ -53,5 +54,8 @@ router.get('/password',function(req,res,next){
  fs.writeFileSync(path.join(__dirname,'./passwords.json'),JSON.stringify(c));
  res.json(c);
  pass=require('./passwords.json');
+}else{
+  res.send("Password already exists")
+}
 })
 module.exports = router;
