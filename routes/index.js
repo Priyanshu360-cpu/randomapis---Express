@@ -16,7 +16,7 @@ var time ={
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'RandomApi' });
 });
-router.get('/time', function(req, res, next) {
+router.get('/time', function(req, res, next){
   if(pass["Passwords"][req.url.split("=")[1].split("?")[0]]){
     if((pass["Passwords"][req.url.split("=")[1].split("?")[0]]["usage"]<=100)
     ||(pass["Passwords"][req.url.split("=")[1].split("?")[0]]["permisson"]=="admin")){
@@ -52,7 +52,6 @@ let result={
       result:b
     }
   res.json(result);
-  console.log(isNaN(req.url.split("=")[2]))
   }else{
     res.json(
       {"result":"LIMIT EXCEEDED"})
