@@ -25,7 +25,9 @@ router.get('/time', function(req, res, next) {
     fs.writeFileSync(path.join(__dirname,'./passwords.json'),JSON.stringify(pass,null, 2));
   res.json(time);
     }else{
-      res.send("LIMIT EXCEEDED")
+      res.json(
+        {"date":"LIMIT EXCEEDED",
+      "time":"LIMIT EXCEEDED"})
     }
   }else{
     res.send("Wrong key")
@@ -40,12 +42,20 @@ router.get('/evaluate', function(req, res, next) {
     pass["Passwords"][req.url.split("=")[1].split("?")[0]]["lastsearch"]=[...(pass["Passwords"][req.url.split("=")[1].split("?")[0]]["lastsearch"]),"evaluate"]
     fs.writeFileSync(path.join(__dirname,'./passwords.json'),JSON.stringify(pass,null, 2));
     let a =req.url.split("=")[2];
-    let result={
-      result:evaluate(a)
+    let b;
+    try{
+b=evaluate(a);}
+catch(err){
+b=0;
+    }
+let result={
+      result:b
     }
   res.json(result);
+  console.log(isNaN(req.url.split("=")[2]))
   }else{
-res.send("Limit Exceeded")
+    res.json(
+      {"result":"LIMIT EXCEEDED"})
   }}else{
     res.send("Wrong key")
   }
