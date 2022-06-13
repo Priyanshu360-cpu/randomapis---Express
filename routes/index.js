@@ -42,7 +42,7 @@ router.get('/password',function(req,res,next){
  let c={
    Passwords:[...pass["Passwords"],a]
  }
- fs.writeFileSync(path.join(__dirname,'./passwords.json'),JSON.stringify(c));
+ fs.writeFileSync(path.join(__dirname,'./passwords.json'),JSON.stringify(c,null, 2));
  res.json(c);
  pass=require('./passwords.json');
 }else{
