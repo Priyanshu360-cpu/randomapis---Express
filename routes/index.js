@@ -2,7 +2,7 @@ const { Console } = require('console');
 var express = require('express');
 var router = express.Router();
 const fs = require('fs');
-const { evaluate } = require('mathjs')
+const { evaluate, random } = require('mathjs')
 const path = require('path');
 var pass = require('./passwords.json');
 var today = new Date();
@@ -28,6 +28,26 @@ router.get('/time', function(req, res, next){
       res.json(
         {"date":"LIMIT EXCEEDED",
       "time":"LIMIT EXCEEDED"})
+    }
+  }else{
+    res.send("Wrong key")
+  }
+  
+});
+router.get('/wallpaper', function(req, res, next){
+  if(pass["Passwords"][req.url.split("=")[1].split("?")[0]]){
+    if((pass["Passwords"][req.url.split("=")[1].split("?")[0]]["usage"]<=100)
+    ||(pass["Passwords"][req.url.split("=")[1].split("?")[0]]["permisson"]=="admin")){
+    pass["Passwords"][req.url.split("=")[1].split("?")[0]]["usage"]=pass["Passwords"][req.url.split("=")[1].split("?")[0]]["usage"]+1;
+    pass["Passwords"][req.url.split("=")[1].split("?")[0]]["lastsearch"]=[...(pass["Passwords"][req.url.split("=")[1].split("?")[0]]["lastsearch"]),"wallpaper"]
+    fs.writeFileSync(path.join(__dirname,'./passwords.json'),JSON.stringify(pass,null, 2));
+  let image=["https://wallpaperaccess.com/full/1154205.jpg","https://cutewallpaper.org/22/neon-circle-wallpapers/1102915097.jpg",""]
+    res.json({
+      "image":image[random(0,image.length)]
+    });
+    }else{
+      res.json(
+        {"image":"LIMIT EXCEEDED"})
     }
   }else{
     res.send("Wrong key")
