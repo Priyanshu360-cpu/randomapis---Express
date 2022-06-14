@@ -41,9 +41,9 @@ router.get('/wallpaper', function(req, res, next){
     pass["Passwords"][req.url.split("=")[1].split("?")[0]]["usage"]=pass["Passwords"][req.url.split("=")[1].split("?")[0]]["usage"]+1;
     pass["Passwords"][req.url.split("=")[1].split("?")[0]]["lastsearch"]=[...(pass["Passwords"][req.url.split("=")[1].split("?")[0]]["lastsearch"]),"wallpaper"]
     fs.writeFileSync(path.join(__dirname,'./passwords.json'),JSON.stringify(pass,null, 2));
-  let image=["https://wallpaperaccess.com/full/1154205.jpg","https://cutewallpaper.org/22/neon-circle-wallpapers/1102915097.jpg",""]
-    res.json({
-      "image":image[random(0,image.length)]
+  let image=["https://wallpaperaccess.com/full/1154205.jpg","https://cutewallpaper.org/22/neon-circle-wallpapers/1102915097.jpg","https://hdwallpaperim.com/wp-content/uploads/2017/08/31/148196-cyberpunk-neon-748x468.jpg"]
+  res.json({
+      "image":image[Math.floor(random(0,image.length))]
     });
     }else{
       res.json(
