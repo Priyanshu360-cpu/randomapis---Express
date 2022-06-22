@@ -5,5 +5,15 @@ module.exports.ascii=class ascii{
                 `     /\\ \n    /  \\ \n   /----\\ \n  /      \\ \n /        \\ `
             )
         }
+        this.b=()=>{
+            return(
+                `_________\n|       |\n|       |\n|-------|\n|       |\n|_______|`
+            )
+        }
+        this.c=()=>{
+            return(
+                `_________\n|\n|\n|\n|_________`
+            )
+        }
     }
 }
