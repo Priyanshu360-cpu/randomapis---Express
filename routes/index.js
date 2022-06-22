@@ -1,3 +1,4 @@
+const ascci =require('./ascii')
 const { Console } = require('console');
 var express = require('express');
 var router = express.Router();
@@ -5,8 +6,11 @@ const fs = require('fs');
 const { evaluate, random } = require('mathjs')
 const path = require('path');
 var pass = require('./passwords.json');
+
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'RandomApi' });
+  let render = new ascci.ascii(); 
+  console.log(render.a())
 });
 router.get('/time', function(req, res, next){
   if(pass["Passwords"][req.url.split("=")[1].split("?")[0]]){
