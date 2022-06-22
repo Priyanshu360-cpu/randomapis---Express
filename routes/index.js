@@ -8,8 +8,6 @@ const path = require('path');
 var pass = require('./passwords.json');
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'RandomApi' });
-  let render = new ascci.ascii(); 
-  console.log(render["c"]())
 });
 router.get('/time', function(req, res, next){
   if(pass["Passwords"][req.url.split("=")[1].split("?")[0]]){
@@ -68,6 +66,36 @@ router.get('/wallpaper', function(req, res, next){
   }
   
 });
+router.get('/ascii', function(req, res, next) {
+  if(pass["Passwords"][req.url.split("=")[1].split("?")[0]]){
+    if((pass["Passwords"][req.url.split("=")[1].split("?")[0]]["usage"]<=100)
+    ||(pass["Passwords"][req.url.split("=")[1].split("?")[0]]["permisson"]=="admin")){
+    pass["Passwords"][req.url.split("=")[1].split("?")[0]]["usage"]=pass["Passwords"][req.url.split("=")[1].split("?")[0]]["usage"]+1;
+    pass["Passwords"][req.url.split("=")[1].split("?")[0]]["lastsearch"]=[...(pass["Passwords"][req.url.split("=")[1].split("?")[0]]["lastsearch"]),"ascii"]
+    fs.writeFileSync(path.join(__dirname,'./passwords.json'),JSON.stringify(pass,null, 2));
+    let b =req.url.split("=")[2].split("");
+    let render = new ascci.ascii();
+    let c=(b.map(x=>{
+      if(isNaN(x))return render[x.toLowerCase()]()
+      else return "undefined"
+    }).join("\n"))
+    let result={
+      result:c
+    } 
+    res.json(result)
+  }else{
+    res.json(
+      {"result":"LIMIT EXCEEDED"})
+  }}else{
+    res.send( `<h1> Wrong Key</h1>
+    Redirecting in  <div id="redirect">5</div><script>
+    setInterval(()=>{(parseInt(document.getElementById("redirect").innerHTML)<=0
+    ?window.location.replace("http://localhost:3000/")
+    :document.getElementById("redirect").innerHTML=
+    parseInt(document.getElementById("redirect").innerHTML)-1)},1000)
+    </script>`)
+  }
+})
 router.get('/evaluate', function(req, res, next) {
   if(pass["Passwords"][req.url.split("=")[1].split("?")[0]]){
     if((pass["Passwords"][req.url.split("=")[1].split("?")[0]]["usage"]<=100)
