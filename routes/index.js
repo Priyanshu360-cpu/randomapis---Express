@@ -55,7 +55,13 @@ router.get('/wallpaper', function(req, res, next){
         {"image":"LIMIT EXCEEDED"})
     }
   }else{
-    res.send("Wrong key")
+    res.send( `<h1> Wrong Key</h1>
+    Redirecting in  <div id="redirect">5</div><script>
+    setInterval(()=>{(parseInt(document.getElementById("redirect").innerHTML)<=0
+    ?window.location.replace("http://localhost:3000/")
+    :document.getElementById("redirect").innerHTML=
+    parseInt(document.getElementById("redirect").innerHTML)-1)},1000)
+    </script>`)
   }
   
 });
@@ -81,7 +87,13 @@ let result={
     res.json(
       {"result":"LIMIT EXCEEDED"})
   }}else{
-    res.send("Wrong key")
+    res.send( `<h1> Wrong Key</h1>
+    Redirecting in  <div id="redirect">5</div><script>
+    setInterval(()=>{(parseInt(document.getElementById("redirect").innerHTML)<=0
+    ?window.location.replace("http://localhost:3000/")
+    :document.getElementById("redirect").innerHTML=
+    parseInt(document.getElementById("redirect").innerHTML)-1)},1000)
+    </script>`)
   }
 })//http://localhost:3000/evaluate?key=123456?data=2+9+829292
 router.get('/password',function(req,res,next){
@@ -95,7 +107,13 @@ router.get('/password',function(req,res,next){
  res.json(pass);
  pass=require('./passwords.json');
 }else{
-  res.send("Password already exists")
+  res.send( `<h1>Password Already Exists </h1>
+  Redirecting in  <div id="redirect">5</div><script>
+  setInterval(()=>{(parseInt(document.getElementById("redirect").innerHTML)<=0
+  ?window.location.replace("http://localhost:3000/")
+  :document.getElementById("redirect").innerHTML=
+  parseInt(document.getElementById("redirect").innerHTML)-1)},1000)
+  </script>`)
 }
 })
 module.exports = router;
