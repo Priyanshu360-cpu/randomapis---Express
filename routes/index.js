@@ -5,14 +5,6 @@ const fs = require('fs');
 const { evaluate, random } = require('mathjs')
 const path = require('path');
 var pass = require('./passwords.json');
-var today = new Date();
-var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-var time ={
-  date:date,
-  time:time,
-}
-
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'RandomApi' });
 });
@@ -23,16 +15,29 @@ router.get('/time', function(req, res, next){
     pass["Passwords"][req.url.split("=")[1].split("?")[0]]["usage"]=pass["Passwords"][req.url.split("=")[1].split("?")[0]]["usage"]+1;
     pass["Passwords"][req.url.split("=")[1].split("?")[0]]["lastsearch"]=[...(pass["Passwords"][req.url.split("=")[1].split("?")[0]]["lastsearch"]),"time"]
     fs.writeFileSync(path.join(__dirname,'./passwords.json'),JSON.stringify(pass,null, 2));
-  res.json(time);
+    var today = new Date();
+    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+    var time ={
+      date:date,
+      time:time,
+    }
+    res.json(time);
     }else{
       res.json(
         {"date":"LIMIT EXCEEDED",
       "time":"LIMIT EXCEEDED"})
     }
   }else{
-    res.send("Wrong key")
+    res.send( `<h1> Wrong Key</h1>
+   Redirecting in  <div id="redirect">5</div><script>
+   setInterval(()=>{(parseInt(document.getElementById("redirect").innerHTML)<=0
+   ?window.location.replace("http://localhost:3000/")
+   :document.getElementById("redirect").innerHTML=
+   parseInt(document.getElementById("redirect").innerHTML)-1)},1000)
+   </script>`)
   }
-  
+ 
 });
 router.get('/wallpaper', function(req, res, next){
   if(pass["Passwords"][req.url.split("=")[1].split("?")[0]]){
